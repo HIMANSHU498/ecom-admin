@@ -6,7 +6,10 @@ const app = express();
 const cors = require("cors");
 const json = require("body-parser").json;
 const session = require("express-session");
-
+mongoose.set("strictQuery", false);
+app.get("/", (req, res) => {
+  res.json("server start");
+});
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -14,7 +17,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(json());
+app.use(express.json());
 app.use(
   session({
     secret: "keyboard cat",
@@ -23,14 +26,14 @@ app.use(
     cookie: { secure: false },
   })
 );
-if (process.env.NODE_ENV == "production") {
-  const path = require("path");
+// if (process.env.NODE_ENV == "production") {
+//   const path = require("path");
 
-  app.get("/", (req, res) => {
-    app.use(express.static(path.resolve(__dirname, "front-end", "build")));
-    res.sendFile(path.resolve(__dirname, "front-end", "build", "index.html"));
-  });
-}
+//   app.get("/", (req, res) => {
+//     app.use(express.static(path.resolve(__dirname, "front-end", "build")));
+//     res.sendFile(path.resolve(__dirname, "front-end", "build", "index.html"));
+//   });
+// }
 const productSchema = new Schema(
   {
     name: { type: String, required: true },
