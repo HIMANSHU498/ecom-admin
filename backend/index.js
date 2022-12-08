@@ -6,7 +6,7 @@ const app = express();
 const cors = require("cors");
 const json = require("body-parser").json;
 const session = require("express-session");
-const { MOGOURI } = require("./config/keys");
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -86,7 +86,9 @@ const Order = new mongoose.model("Order", orderSchema);
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(MOGOURI);
+  await mongoose.connect(
+    "mongodb+srv://himanshu:8871@ecom.sri4fzz.mongodb.net/test"
+  );
   console.log("Server Connected");
 }
 
